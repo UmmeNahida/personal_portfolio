@@ -4,7 +4,7 @@ import { prisma } from "../../config/db"
 
 
 const createBlog = async (payload: Prisma.PostCreateInput):Promise<Post> => {
-  // console.log("payload",payload)
+  
   const blog = await prisma.post.create({
     data: payload
   })
@@ -14,12 +14,11 @@ const createBlog = async (payload: Prisma.PostCreateInput):Promise<Post> => {
 }
 
 const singleBlog = async(id:number)=>{
-  // console.log("id:",id);
+  
   const post = await prisma.post.findUnique({where:{id}, include:{author:true}})
   if (!post){
     throw new Error("Blog not found")
   }
-  console.log("post",post)
   return post
 }
 
@@ -49,7 +48,7 @@ const getAllBlog = async(search:string, page:number, limit:number)=>{
 
   const totalPost = await prisma.post.count()
   const totalPage = Math.ceil(totalPost / limit)
-  console.log("totalPost,",totalPost)
+  
   return {
     data:post,
     meta:{
